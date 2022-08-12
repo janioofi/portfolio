@@ -1,9 +1,8 @@
-from crypt import methods
-import email
+
 from pickle import GET
 from flask import Flask, render_template, redirect, request, flash
 from flask_mail import Mail, Message
-from config.config import email, senha
+from config import email, senha
 
 app = Flask(__name__)
 app.secret_key = '1234'
@@ -21,9 +20,9 @@ app.config.update(mail_settings)
 mail = Mail(app)
 
 class Contato:
-    def _init(self, nome, email, mensagem):
-        self.nome = nome,
-        self.mensagem = mensagem,
+    def __init__(self, nome, email, mensagem):
+        self.nome = nome
+        self.mensagem = mensagem
         self.email = email
 
 
@@ -45,7 +44,7 @@ def send():
             recipients = [app.config.get("MAIL_USERNAME")],
             body =  f'''
             
-            {formContato.nome} com o e-mail{formContato.email}, te enviou a seguinte mensagem:
+            {formContato.nome} com o e-mail {formContato.email}, te enviou a seguinte mensagem:
             
             {formContato.mensagem}   
             
